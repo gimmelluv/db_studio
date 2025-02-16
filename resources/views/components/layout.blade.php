@@ -7,15 +7,15 @@
     <title>DB Studio</title>
     @Vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-    <div>
-        <nav>
+<body class="bg-castom_white text-black">
+    <div class="px-10">
+        <nav class="flex justify-between items-center py-4 border-b border-black/10">
             <div>
                 <a href="">
-                    <img src="{{ Vite::asset('resources/images/logo.svg')}}" alt="">
+                    <img src="{{ Vite::asset('resources/images/db_logo.svg')}}" alt="">
                 </a>
             </div>
-            <div>
+            <div class="space-x-6">
                 <a href="#">Курс</a>
                 <a href="#">Лаборатория</a>
                 <a href="#">Мое обучение</a>
@@ -24,7 +24,7 @@
             <div>post a job</div>
         </nav>
 
-        <main>
+        <main class="mt-10">
             {{ $slot }}
         </main>
     </div>

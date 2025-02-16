@@ -10,6 +10,12 @@ export default {
     ],
     theme: {
         extend: {
+            colors: {
+                "castom_white": "#f5f5f5",
+                "castom_blue": "#1357D2",
+                "black": "#060606"
+            },
+            
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
