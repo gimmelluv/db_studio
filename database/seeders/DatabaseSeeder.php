@@ -19,5 +19,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Запуск TheorySeeder для создания записей теории
+        $this->call(TheorySeeder::class);
     }
 }
