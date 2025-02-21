@@ -1,5 +1,5 @@
 <div class="p-4 bg-black/5 rounded-xl flex flex-col text-center">
-    <div class="self-start text-sm">Задание к которому привязана диаграмма</div>
+    <div class="text-sm">Задание к которому привязана диаграмма</div>
 
     <div class="py-4 font-bold">
         <h3>Название диаграммы</h3>
