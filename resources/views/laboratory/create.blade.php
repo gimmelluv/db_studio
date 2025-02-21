@@ -2,7 +2,7 @@
     <h2 class="text-center">Создание диаграммы</h2>
         <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mt-5">
     
-            <form action="/laboratory/create" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('diagrams.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 
                 <x-forms.input id="type"
@@ -17,12 +17,22 @@
                 </div>
 
                 <div class="mb-4 mt-5">
-                    <x-forms.input id="file" label="Загрузить файл" type="file" name="file"/>
+                    <x-forms.input id="file" 
+                        label="Загрузить файл" 
+                        type="file" 
+                        name="file"
+                        accept=".xml,.drawio,.xslt,.xbl,.xsl,.svg,.png"/>
+                    <p class="text-sm text-gray-600 mt-1">
+                        Допустимые форматы: XML (*.drawio, *.xml, *.xslt, *.xbl, *.xsl), SVG, PNG
+                    </p>
+                    @error('file')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="flex justify-between mt-4">
-                    <x-forms.button type="submit" hoverOpacity="40">Сохранить в лаборатории</x-forms.button>
-                    <x-forms.button type="button" hoverOpacity="70">Отправить на проверку</x-forms.button>
+                    <x-forms.button type="submit">Сохранить в лаборатории</x-forms.button>
+                    <x-forms.button type="button">Отправить на проверку</x-forms.button>
                 </div>
     
             </form>

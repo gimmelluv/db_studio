@@ -12,4 +12,23 @@
             <x-lab-card />
         </div>
     </section>
+    @if(session('success'))
+        <div id="success-alert" class="bg-black/5 text-black text-sm px-4 py-3 rounded relative mt-20" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <script>
+        // Убедитесь, что DOM загружен
+        document.addEventListener("DOMContentLoaded", function() {
+            // Получаем элемент уведомления
+            var alert = document.getElementById('success-alert');
+            if (alert) {
+                // Убираем уведомление через 5 секунд (5000 миллисекунд)
+                setTimeout(function() {
+                    alert.style.display = 'none';
+                }, 1000);
+            }
+        });
+    </script>
 </x-layout>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DiagramController;
 use App\Http\Controllers\TheoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,3 +17,5 @@ Route::get('/laboratory', function () {
 Route::get('/laboratory/create', function () {
     return view('laboratory.create');
 });
+
+Route::post('/diagrams/store', [DiagramController::class, 'store'])->name('diagrams.store');
