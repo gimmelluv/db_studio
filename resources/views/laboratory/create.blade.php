@@ -2,7 +2,7 @@
     <h2 class="text-center">Создание диаграммы</h2>
         <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mt-5">
     
-            <form action="{{ route('diagrams.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('laboratory.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 
                 <x-forms.input id="type"

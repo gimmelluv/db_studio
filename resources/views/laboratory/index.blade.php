@@ -7,9 +7,13 @@
         </div>
 
         <div class="grid lg:grid-cols-3 gap-8">
-            <x-lab-card />
-            <x-lab-card />
-            <x-lab-card />
+            @foreach($diagrams as $diagram)
+                <x-lab-card 
+                    :type="$diagram->type" 
+                    :title="$diagram->title" 
+                    :description="$diagram->description" 
+                />
+            @endforeach
         </div>
     </section>
     @if(session('success'))

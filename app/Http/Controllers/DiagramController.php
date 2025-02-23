@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class DiagramController extends Controller
 {
+    public function create()
+    {
+        return view('laboratory.create');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -75,4 +80,12 @@ class DiagramController extends Controller
             return false;
         }
     }
+
+    public function index()
+    {
+        $diagrams = Diagram::orderBy('created_at', 'desc')->get();
+
+        // Возврат представления с данными диаграмм
+        return view('laboratory.index', compact('diagrams'));
+        }
 }
