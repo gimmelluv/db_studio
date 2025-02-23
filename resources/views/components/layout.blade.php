@@ -14,20 +14,27 @@
     <div class="px-10">
         <nav class="flex justify-between items-center py-4 border-b border-black/10">
             <div>
-                <a href="">
+                <a href="/">
                     <img src="{{ Vite::asset('resources/images/db_logo.svg')}}" alt="">
                 </a>
             </div>
             <div class="space-x-6">
-                <a href="#">Курс</a>
-                <a href="#">Лаборатория</a>
-                <a href="#">Мое обучение</a>
+                <a href="/theory">Курс</a>
+                <a href="/laboratory">Лаборатория</a>
+                <a href="/progress">Мое обучение</a>
                 <a href="#">Контакты</a>
             </div>
             
             @auth
-                <div>
-                    Кнопка профиля мб
+                <div class="space-x-6 flex">
+                    <a href="#">Кнопка профиля мб</a>
+
+                    <form method="POST" action="/logout">
+                        @csrf
+                        @method('DELETE')
+
+                        <button>Выйти</button>
+                    </form>
                 </div>
             @endauth
 
