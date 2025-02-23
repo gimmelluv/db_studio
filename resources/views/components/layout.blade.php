@@ -22,12 +22,11 @@
                 <a href="/theory">Курс</a>
                 <a href="/laboratory">Лаборатория</a>
                 <a href="/progress">Мое обучение</a>
-                <a href="#">Контакты</a>
             </div>
             
             @auth
                 <div class="space-x-6 flex">
-                    <a href="#">Кнопка профиля мб</a>
+                    <a href="#">Профиль</a>
 
                     <form method="POST" action="/logout">
                         @csrf

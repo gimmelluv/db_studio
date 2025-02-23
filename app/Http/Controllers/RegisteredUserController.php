@@ -34,6 +34,14 @@ class RegisteredUserController extends Controller
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::min(6)],
+        ], [
+            'name.required' => 'Поле Имя обязательно для заполнения.',
+            'email.required' => 'Поле Email обязательно для заполнения.',
+            'email.email' => 'Введите корректный адрес электронной почты.',
+            'email.unique' => 'Этот адрес электронной почты уже занят.',
+            'password.required' => 'Поле Пароль обязательно для заполнения.',
+            'password.confirmed' => 'Пароли не совпадают.',
+            'password.min' => 'Пароль должен содержать не менее :min символов.',
         ]);
 
         $user = User::create($userAttributes);

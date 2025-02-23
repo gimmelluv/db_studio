@@ -29,11 +29,16 @@ class SessionController extends Controller
      */
     public function store(Request $request)
     {
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
+        ], [
+            'email.required' => 'Поле Email обязательно для заполнения.',
+            'email.email' => 'Введите корректный адрес электронной почты.',
+            'password.required' => 'Поле Пароль обязательно для заполнения.',
         ]);
-
+    
+        // Попытка аутентификации
         if (! Auth::attempt($attributes)) {
             throw ValidationException::withMessages([
                 'email' => 'Извините, учетные данные не совпадают.',
