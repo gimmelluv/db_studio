@@ -10,7 +10,7 @@
         rel="stylesheet">
     @Vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-castom_white text-black font-montserrat">
+<body class="bg-castom_white text-black font-montserrat pb-20">
     <div class="px-10">
         <nav class="flex justify-between items-center py-4 border-b border-black/10">
             <div>
@@ -24,7 +24,19 @@
                 <a href="#">Мое обучение</a>
                 <a href="#">Контакты</a>
             </div>
-            <div>post a job</div>
+            
+            @auth
+                <div>
+                    Кнопка профиля мб
+                </div>
+            @endauth
+
+            @guest
+                <div class="space-x-6">
+                    <a href="/register">Регистрация</a>
+                    <a href="/login">Войти</a>
+                </div>
+            @endguest
         </nav>
 
         <main class="mt-10 max-w-[986px] mx-auto">
