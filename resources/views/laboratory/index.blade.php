@@ -12,6 +12,7 @@
                     :type="$diagram->type" 
                     :title="$diagram->title" 
                     :description="$diagram->description" 
+                    :diagram="$diagram"
                 />
             @endforeach
         </div>

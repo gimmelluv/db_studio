@@ -7,6 +7,47 @@ use Illuminate\Http\Request;
 
 class DiagramController extends Controller
 {
+    public function update($id)
+    {
+        request()->validate([
+            'type' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        $diagram = Diagram::findOrFail($id);
+
+        $diagram->update([
+            'type' => request('type'),
+            'title' => request('title'),
+            'description' => request('description'),
+        ]);
+
+        return redirect('/laboratory/' . $diagram->id);
+    }
+
+    public function destroy($id)
+    {
+        $diagram = Diagram::findOrFail($id);
+        $diagram->delete();
+
+        return redirect()->route('laboratory.index');
+    }
+
+    public function edit($id)
+    {
+        $diagram = Diagram::find($id);
+
+        return view('laboratory.edit', ['diagram' => $diagram]);
+    }
+
+    // Метод для отображения полной информации о диаграмме
+    public function show($id)
+    {
+        $diagram = Diagram::findOrFail($id); // Находим диаграмму по ID
+        return view('laboratory.show', compact('diagram')); // Передаем данные в шаблон
+    }
+
     public function create()
     {
         return view('laboratory.create');

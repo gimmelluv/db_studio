@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('diagrams', function (Blueprint $table) {
+       Schema::create('diagrams', function (Blueprint $table) {
             $table->id();
             $table->string('type');
             $table->string('title');
             $table->text('description');
             $table->string('file_path');
             $table->timestamps();
-        });
+        }); 
     }
 
     /**
