@@ -12,23 +12,19 @@
         <div class="ml-20">
             @foreach ($theories as $theory)
                 <x-theory-head sectionId="section{{ $theory->id }}" sectionTitle="{{ $theory->title }}"/>
-                <p class="mt-5">{{ $theory->content }}</p>
+                <p class="mt-10 mb-10">{{ $theory->content }}</p>
 
-                <!-- Кнопка "Отметить прочитанным" -->
-                <button class="mark-read-btn bg-castom_blue text-white px-4 py-2 rounded mt-2" onclick="markAsRead(this)">
-                    Отметить прочитанным
-                </button>
+                <form action="{{ route('theory.markAsPassed', $theory) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="bg-castom_blue/60 text-white px-4 py-2 rounded-full hover:bg-castom_blue/50 transition duration-300">
+                        Отметить пройденным
+                    </button>
+                </form>
+
+                <!-- Добавьте дополнительный элемент для отступа -->
+                <div class="mt-10"></div> <!-- Это создаст дополнительное пространство -->
             @endforeach
         </div>
     </div>
-    <script>
-        function markAsRead(button) {
-            // Изменяем текст кнопки
-            button.innerText = 'Прочитано';
-            button.disabled = true; // Отключаем кнопку после нажатия
-            button.classList.remove('bg-castom_blue');
-            button.classList.add('bg-gray-500'); // Изменяем цвет кнопки
-        }
-    </script>
 
 </x-layout>

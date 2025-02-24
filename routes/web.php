@@ -11,6 +11,11 @@ Route::get('/', function () {
 });
 
 Route::get('/theory', [TheoryController::class, 'index']);
+Route::get('/theory/test', function () {
+    return view('theory.test');
+})->name('theory.test');
+
+Route::post('/theory/{theory}/mark-as-passed', [TheoryController::class, 'markAsPassed'])->name('theory.markAsPassed');
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisteredUserController::class, 'create']);

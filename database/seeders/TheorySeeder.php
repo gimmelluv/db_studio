@@ -13,6 +13,6 @@ class TheorySeeder extends Seeder
      */
     public function run(): void
     {
-        Theory::factory()->count(10)->create(); // Создает 10 записей теории
+        Theory::factory()->count(20)->create(); // Создает 10 записей теории
     }
 }
