@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DiagramController;
+use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TheoryController;
@@ -45,8 +46,6 @@ Route::patch('/laboratory/{id}', [DiagramController::class, 'update'])->name('la
 //delete передаем айди в функцию в контроллере
 Route::delete('/laboratory/{id}', [DiagramController::class, 'destroy'])->name('laboratory.destroy');
 
-Route::get('/progress', function () {
-    return view('progress.index');
-});
+Route::get('/progress', [ProgressController::class, 'index'])->name('progress');
 
 Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');
