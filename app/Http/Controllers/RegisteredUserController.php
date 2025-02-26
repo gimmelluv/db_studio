@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
         $userAttributes = $request->validate([
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Password::min(6)],
+            'password' => ['required', 'confirmed', Password::min(8)],
         ], [
             'name.required' => 'Поле Имя обязательно для заполнения.',
             'email.required' => 'Поле Email обязательно для заполнения.',

@@ -31,6 +31,7 @@
                         <button form="delete-form" class="text-red-500 text-sm">Удалить</button>
                         <button type="submit" class="bg-castom_blue/60 text-white px-4 py-2 rounded-full hover:bg-castom_blue/50 transition duration-300">Сохранить</button>
                     </div>
+                </div>
             </form>
 
             <form method="POST" action="/laboratory/{{ $diagram->id }}" id="delete-form" class="hidden">

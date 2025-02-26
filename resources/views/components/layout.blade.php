@@ -27,7 +27,7 @@
             
             @auth
                 <div class="space-x-6 flex">
-                    <a href="#">Профиль</a>
+                    <a href="{{ route('profile.show') }}">Профиль</a>
 
                     <form method="POST" action="/logout">
                         @csrf
