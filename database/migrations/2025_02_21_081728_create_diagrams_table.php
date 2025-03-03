@@ -13,6 +13,9 @@ return new class extends Migration
     {
        Schema::create('diagrams', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id') // Добавляем поле для хранения идентификатора пользователя
+                  ->constrained() // Создаем внешний ключ, ссылающийся на таблицу users
+                  ->onDelete('cascade'); // Удаляем диаграммы, если пользователь удален
             $table->string('type');
             $table->string('title');
             $table->text('description');

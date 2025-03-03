@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Theory::class)->withPivot('is_passed');
     }
+
+    public function diagrams()
+    {
+        return $this->hasMany(Diagram::class);
+    }
 }

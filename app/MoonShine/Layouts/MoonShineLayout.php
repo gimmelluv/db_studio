@@ -30,8 +30,13 @@ use MoonShine\UI\Components\{Breadcrumbs,
     Layout\TopBar,
     Layout\Wrapper,
     When};
+use App\MoonShine\Resources\DiagramResource;
+use MoonShine\MenuManager\MenuItem;
+use App\MoonShine\Resources\UserResource;
+use App\MoonShine\Resources\TheoryResource;
+use MoonShine\Laravel\Layouts\AppLayout;
 
-final class MoonShineLayout extends CompactLayout
+final class MoonShineLayout extends AppLayout
 {
     protected function assets(): array
     {
@@ -44,6 +49,9 @@ final class MoonShineLayout extends CompactLayout
     {
         return [
             ...parent::menu(),
+            MenuItem::make('Diagrams', DiagramResource::class),
+            MenuItem::make('Users', UserResource::class),
+            MenuItem::make('Theories', TheoryResource::class),
         ];
     }
 
