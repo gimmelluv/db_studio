@@ -2,28 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Diagram extends Model
 {
-    protected $fillable = ['type', 'title', 'description', 'file_path'];
+    use HasFactory;
 
-    // Добавляем слушатель события deleting
-    protected static function boot()
-    {
-        parent::boot();
+    protected $fillable = [
+        'type',
+        'title',
+        'description',
+        'file_path',
+        'user_id', 
+    ];
 
-        // Перед удалением записи из БД
-        static::deleting(function ($diagram) {
-            // Удаляем файл
-            if ($diagram->file_path) {
-                Storage::disk('public')->delete($diagram->file_path);
-            }
-        });
-    }
-
-    public function user()
+    // Связь с пользователем
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

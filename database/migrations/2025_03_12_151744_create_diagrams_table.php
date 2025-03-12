@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('diagrams', function (Blueprint $table) {
+        Schema::create('diagrams', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id') // Добавляем поле для хранения идентификатора пользователя
-                  ->constrained() // Создаем внешний ключ, ссылающийся на таблицу users
-                  ->onDelete('cascade'); // Удаляем диаграммы, если пользователь удален
             $table->string('type');
             $table->string('title');
             $table->text('description');
             $table->string('file_path');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Связь с пользователем
             $table->timestamps();
-        }); 
+        });
     }
 
     /**

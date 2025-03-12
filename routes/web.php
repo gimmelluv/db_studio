@@ -17,6 +17,10 @@ Route::get('/theory/test', function () {
     return view('theory.test');
 })->name('theory.test');
 
+Route::middleware('auth')->group(function () {
+    Route::resource('laboratory', DiagramController::class);
+});
+
 Route::post('/theory/{theory}/mark-as-passed', [TheoryController::class, 'markAsPassed'])->name('theory.markAsPassed');
 
 Route::middleware('guest')->group(function () {
@@ -29,25 +33,14 @@ Route::middleware('guest')->group(function () {
 
 Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');
 
-// Отображение всех диаграмм
-Route::get('/laboratory', [DiagramController::class, 'index'])->name('laboratory.index');
 
-// Отображение формы для создания диаграммы
-Route::get('/laboratory/create', [DiagramController::class, 'create'])->name('laboratory.create');
-
-// Обработка сохранения диаграммы
-Route::post('/laboratory/store', [DiagramController::class, 'store'])->name('laboratory.store');
-
-// Маршрут для просмотра полной информации о диаграмме
-Route::get('/laboratory/{id}', [DiagramController::class, 'show'])->name('laboratory.show');
-
-Route::get('/laboratory/{id}/edit', [DiagramController::class, 'edit'])->name('laboratory.edit');
-
-//update передаем айди в функцию в контроллере
-Route::patch('/laboratory/{id}', [DiagramController::class, 'update'])->name('laboratory.update');
-
-//delete передаем айди в функцию в контроллере
-Route::delete('/laboratory/{id}', [DiagramController::class, 'destroy'])->name('laboratory.destroy');
+// Route::get('/laboratory', [DiagramController::class, 'index'])->name('laboratory.index');
+// Route::get('/laboratory/create', [DiagramController::class, 'create'])->name('laboratory.create');
+// Route::post('/laboratory/store', [DiagramController::class, 'store'])->name('laboratory.store');
+// Route::get('/laboratory/{id}', [DiagramController::class, 'show'])->name('laboratory.show');
+// Route::get('/laboratory/{id}/edit', [DiagramController::class, 'edit'])->name('laboratory.edit');
+// Route::patch('/laboratory/{id}', [DiagramController::class, 'update'])->name('laboratory.update');
+// Route::delete('/laboratory/{id}', [DiagramController::class, 'destroy'])->name('laboratory.destroy');
 
 Route::get('/progress', [ProgressController::class, 'index'])->name('progress');
 

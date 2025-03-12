@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -52,7 +53,12 @@ class User extends Authenticatable
         return $this->belongsToMany(Theory::class)->withPivot('is_passed');
     }
 
-    public function diagrams()
+    /**
+     * Получить диаграммы пользователя.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function diagrams(): HasMany
     {
         return $this->hasMany(Diagram::class);
     }
