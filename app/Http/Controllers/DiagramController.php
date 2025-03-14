@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Diagram;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class DiagramController extends Controller
@@ -44,26 +45,26 @@ class DiagramController extends Controller
 
         $filePath = $request->file('file')->store('diagrams', 'public');
     
-        // Автоматически добавляем user_id текущего пользователя
-        Auth::user()->diagrams()->create([
+        // Создаем диаграмму
+        $diagram = Diagram::create([
             'type' => $request->type,
             'title' => $request->title,
             'description' => $request->description,
             'file_path' => $filePath,
+            'user_id' => Auth::id(), // Явно указываем user_id
         ]);
-    
+
         return redirect()->route('laboratory.index')->with('success', 'Диаграмма успешно создана!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Diagram $diagram)
+    public function show($id)
     {
-        // Проверка, что диаграмма принадлежит текущему пользователю
-        if ($diagram->user_id !== Auth::id()) {
-            abort(403, 'У вас нет доступа к этой диаграмме.');
-        }
+        $diagram = Diagram::findOrFail($id);
+
+        Log::info('Diagram data:', $diagram->toArray());
 
         return view('laboratory.show', compact('diagram'));
     }
@@ -71,32 +72,35 @@ class DiagramController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Diagram $diagram)
+    public function edit($id)
     {
-        // Проверка, что диаграмма принадлежит текущему пользователю
-        if ($diagram->user_id !== Auth::id()) {
-            abort(403, 'У вас нет доступа к этой диаграмме.');
-        }
+        $diagram = Diagram::findOrFail($id);
 
+        Log::info('Diagram data:', $diagram->toArray());
         return view('laboratory.edit', compact('diagram'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Diagram $diagram)
+    public function update(Request $request, $id)
     {
+            // Попытка найти диаграмму по ID
+        $diagram = Diagram::findOrFail($id);
+
         // Проверка, что диаграмма принадлежит текущему пользователю
         if ($diagram->user_id !== Auth::id()) {
             abort(403, 'У вас нет доступа к этой диаграмме.');
         }
 
+        // Валидация входящих данных
         $request->validate([
             'type' => 'required',
             'title' => 'required',
             'description' => 'required',
         ]);
 
+        // Обновление диаграммы
         $diagram->update([
             'type' => $request->type,
             'title' => $request->title,
@@ -109,16 +113,30 @@ class DiagramController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Diagram $diagram)
+    public function destroy($id)
     {
+        
+            // Попытка найти диаграмму по ID
+        $diagram = Diagram::findOrFail($id);
+
         // Проверка, что диаграмма принадлежит текущему пользователю
         if ($diagram->user_id !== Auth::id()) {
             abort(403, 'У вас нет доступа к этой диаграмме.');
         }
 
-        Storage::disk('public')->delete($diagram->file_path);
+        Log::info('Attempting to delete diagram:', $diagram->toArray());
+
+        // Проверяем, существует ли file_path
+        if ($diagram->file_path) {
+            // Удаляем файл из хранилища
+            Storage::disk('public')->delete($diagram->file_path);
+        } else {
+            Log::warning('File path is null for diagram:', $diagram->toArray());
+        }
+
+        // Удаляем диаграмму из базы данных
         $diagram->delete();
 
-        return redirect()->route('laboratory.index')->with('success', 'Диаграмма успешно удалена!');
+        return redirect()->route('laboratory.index')->with('success', 'Диаграмма успешно удалена.');
     }
 }
