@@ -1,18 +1,23 @@
 <x-layout>
     <div class="flex">
-        <div>
-            <h2 class="font-bold text-lg mb-2">Навигация</h2>
-            <ul class="list-disc pl-5">
+        <div class="sticky top-0 bg-white z-10 shadow-md h-screen w-64 p-4 rounded-lg">
+            {{-- <h2 class="font-bold text-lg mb-2">Навигация</h2> --}}
+            <ul class="list-none pl-5 space-y-2">
                 @foreach ($theories as $theory)
                     <x-theory-head-nav sectionId="section{{ $theory->id }}" sectionTitle="{{ $theory->title }}"/>
                 @endforeach
             </ul>
         </div>
 
-        <div class="ml-20">
+        <div class="ml-8 flex-1 bg-white p-6 rounded-lg shadow-md max-w-3xl">
             @foreach ($theories as $theory)
                 <x-theory-head sectionId="section{{ $theory->id }}" sectionTitle="{{ $theory->title }}"/>
-                <p class="mt-10 mb-10">{{ $theory->content }}</p>
+
+                {{-- @if ($theory->subtitle)
+                    <p class="mt-2">{{ $theory->subtitle }}</p>
+                @endif --}}
+
+                <div class="mt-10 mb-10 whitespace-pre-wrap">{!! $theory->content !!}</div>
 
                 @auth
                     @php
