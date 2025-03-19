@@ -35,6 +35,7 @@ use MoonShine\MenuManager\MenuItem;
 use App\MoonShine\Resources\UserResource;
 use App\MoonShine\Resources\TheoryResource;
 use MoonShine\Laravel\Layouts\AppLayout;
+use App\MoonShine\Resources\TaskResource;
 
 final class MoonShineLayout extends AppLayout
 {
