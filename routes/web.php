@@ -7,11 +7,15 @@ use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TheoryController;
+use App\Http\Controllers\TrainingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/training', [TrainingController::class, 'showForm']);
+Route::post('/training/execute-query', [TrainingController::class, 'executeQuery']);
 
 Route::get('/theory', [TheoryController::class, 'index']);
 Route::get('/theory/test', function () {

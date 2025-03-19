@@ -42,6 +42,18 @@ return [
             'synchronous' => null,
         ],
 
+        // Учебное подключение
+        'training_sqlite' => [
+            'driver' => 'sqlite',
+            'url' => env('DB_TRAINING_URL'),
+            'database' => env('DB_TRAINING_DATABASE', database_path('training_db.sqlite')),
+            'prefix' => '',
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+            'busy_timeout' => null,
+            'journal_mode' => null,
+            'synchronous' => null,
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
