@@ -43,5 +43,26 @@
                 </li>
             @endforeach
         </ul>
+
+        <h2 class="text-lg font-semibold mb-4">Выполненные задания:</h2>
+            <ul class="space-y-4">
+                @foreach ($tasks as $task)
+                    <li class="p-4 border rounded-lg {{ $user->tasks->contains($task->id) && $user->tasks()->where('task_id', $task->id)->first()->pivot->is_passed ? 'border-green-500 bg-green-50' : '' }}">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center mr-4 {{ $user->tasks->contains($task->id) && $user->tasks()->where('task_id', $task->id)->first()->pivot->is_passed ? 'bg-green-500' : 'bg-gray-300' }}">
+                                @if ($user->tasks->contains($task->id) && $user->tasks()->where('task_id', $task->id)->first()->pivot->is_passed)
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                @endif
+                            </div>
+                            <div>
+                                <h3 class="font-bold">{{ $task->title }}</h3>
+                                <p class="text-sm text-gray-600">Практическое задание</p>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
     </div>
 </x-layout>

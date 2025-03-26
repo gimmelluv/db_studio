@@ -62,4 +62,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Diagram::class);
     }
+
+        // app/Models/User.php
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class)->withPivot('is_passed');
+    }
 }

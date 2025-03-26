@@ -2,87 +2,85 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TrainingController extends Controller
 {
 
-    private $tasks = [
-        [
-            'id' => 1,
-            'title' => 'Базовый SELECT',
-            'description' => 'Выведите всех пользователей из таблицы users.',
-            'solution' => 'SELECT * FROM users;',
-            'check_query' => 'SELECT COUNT(*) as count FROM users;'
-        ],
-        [
-            'id' => 2,
-            'title' => 'SELECT с условием',
-            'description' => 'Выведите пользователей старше 25 лет.',
-            'solution' => 'SELECT * FROM users WHERE age > 25;',
-            'check_query' => 'SELECT COUNT(*) as count FROM users WHERE age > 25;'
-        ],
-        [
-            'id' => 3,
-            'title' => 'JOIN таблиц',
-            'description' => 'Выведите все заказы вместе с именами пользователей, которые их сделали.',
-            'solution' => 'SELECT o.*, u.name FROM orders o JOIN users u ON o.user_id = u.id;',
-            'check_query' => 'SELECT COUNT(*) as count FROM orders o JOIN users u ON o.user_id = u.id;'
-        ],
-        [
-            'id' => 4,
-            'title' => 'GROUP BY и агрегатные функции',
-            'description' => 'Посчитайте общую сумму заказов для каждого пользователя.',
-            'solution' => 'SELECT user_id, SUM(amount) as total_amount FROM orders GROUP BY user_id;',
-            'check_query' => 'SELECT COUNT(*) as count FROM (SELECT user_id FROM orders GROUP BY user_id) as temp;'
-        ],
-        [
-            'id' => 5,
-            'title' => 'Подзапросы',
-            'description' => 'Выведите пользователей, у которых есть хотя бы один завершенный заказ.',
-            'solution' => 'SELECT * FROM users WHERE id IN (SELECT user_id FROM orders WHERE status = "completed");',
-            'check_query' => 'SELECT COUNT(*) as count FROM users WHERE id IN (SELECT user_id FROM orders WHERE status = "completed");'
-        ],
-    ];
-
     public function showForm()
     {
-        return view('training.index', ['tasks' => $this->tasks]);
+        /** @var \App\Models\User $user */
+        $user = Auth::user(); // Получаем текущего пользователя
+    
+        $tasks = Task::all()->map(function ($task) {
+            return [
+                'id' => $task->id,
+                'title' => $task->title,
+                'description' => $task->description,
+                'solution' => $task->solution,
+                'check_query' => $task->check_query,
+                'difficulty' => $task->difficulty
+            ];
+        });
+    
+        $completedTasks = $user->tasks()
+            ->wherePivot('is_passed', true)
+            ->pluck('id')
+            ->toArray();
+    
+        return view('training.index', [
+            'tasks' => $tasks,
+            'completedTasks' => $completedTasks
+        ]);
     }
 
     public function executeQuery(Request $request)
     {
+        /** @var \App\Models\User $user */
+        $user = Auth::user(); // Получаем текущего пользователя
         $query = $request->input('query');
         $taskId = $request->input('task_id');
 
         try {
-            // Выполнение запроса пользователя
+            // Выполнение в учебной БД
             $userResults = DB::connection('training_sqlite')->select($query);
             
-            // Проверка решения, если указан task_id
-            $verification = null;
             if ($taskId) {
-                $task = collect($this->tasks)->firstWhere('id', $taskId);
-                if ($task) {
-                    $expectedResults = DB::connection('training_sqlite')->select($task['check_query']);
-                    $userCheckResults = DB::connection('training_sqlite')->select($task['check_query']);
-                    
-                    $verification = [
-                        'is_correct' => $expectedResults == $userCheckResults,
-                        'expected' => $expectedResults,
-                        'solution' => $task['solution']
-                    ];
+                $task = Task::find($taskId);
+                $expectedResults = DB::connection('training_sqlite')
+                    ->select($task->check_query);
+                
+                $isCorrect = $expectedResults == $userResults;
+                
+                if ($isCorrect) {
+                    $user->tasks()->syncWithoutDetaching([
+                        $taskId => ['is_passed' => true]
+                    ]);
                 }
+
+                return response()->json([
+                    'success' => true,
+                    'results' => $userResults,
+                    'verification' => [
+                        'is_correct' => $isCorrect,
+                        'solution' => $task->solution
+                    ]
+                ]);
             }
 
             return response()->json([
-                'success' => true, 
-                'results' => $userResults,
-                'verification' => $verification
+                'success' => true,
+                'results' => $userResults
             ]);
+
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'error' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage()
+            ]);
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\Theory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,14 +16,20 @@ class ProgressController extends Controller
 
         // Получаем все теории
         $theories = Theory::all();
+        $tasks = Task::all();
     
-        // Подсчет пройденных теорий
-        $passedCount = $user->theories()->where('is_passed', true)->count();
-        $totalCount = $theories->count(); // Общее количество теорий
-    
-        // Рассчитываем процент прогресса
-        $progress = $totalCount > 0 ? ($passedCount / $totalCount) * 100 : 0;
-    
-        return view('progress.index', compact('theories', 'progress', 'user'));
+        // Рассчитываем общий прогресс
+        $totalItems = $theories->count() + $tasks->count();
+        $completedItems = $user->theories()->wherePivot('is_passed', true)->count() 
+                        + $user->tasks()->wherePivot('is_passed', true)->count();
+        
+        $progress = $totalItems > 0 ? round(($completedItems / $totalItems) * 100) : 0;
+
+        return view('progress.index', [
+            'progress' => $progress,
+            'theories' => $theories,
+            'tasks' => $tasks,
+            'user' => $user
+        ]);
     }
 }

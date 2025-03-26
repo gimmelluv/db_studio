@@ -14,8 +14,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/training', [TrainingController::class, 'showForm']);
-Route::post('/training/execute-query', [TrainingController::class, 'executeQuery']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/training', [TrainingController::class, 'showForm']);
+    Route::post('/training/execute-query', [TrainingController::class, 'executeQuery']);
+    Route::get('/progress', [ProgressController::class, 'index']);
+});
 
 Route::get('/theory', [TheoryController::class, 'index']);
 Route::get('/theory/test', function () {

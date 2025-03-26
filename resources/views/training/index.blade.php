@@ -4,7 +4,18 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             @foreach($tasks as $task)
-                <div class="border rounded-lg p-4 hover:bg-gray-50 transition cursor-pointer" data-task-id="{{ $task['id'] }}">
+                <div class="border rounded-lg p-4 hover:bg-gray-50 transition cursor-pointer relative 
+                            {{ in_array($task['id'], $completedTasks) ? 'border-green-500 bg-green-50' : '' }}" 
+                     data-task-id="{{ $task['id'] }}">
+                    
+                    @if(in_array($task['id'], $completedTasks))
+                        <div class="absolute top-2 right-2 bg-green-500 text-white rounded-full p-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                    @endif
+                    
                     <h3 class="font-bold text-lg mb-2">{{ $task['title'] }}</h3>
                     <p class="text-gray-600 mb-3">{{ $task['description'] }}</p>
                     <button class="select-task bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded text-sm">
