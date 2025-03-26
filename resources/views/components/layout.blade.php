@@ -23,6 +23,7 @@
                 <a href="/theory">Курс</a>
                 <a href="/laboratory">Лаборатория</a>
                 <a href="/progress">Мое обучение</a>
+                <a href="/training">Тренажер</a>
             </div>
             
             @auth
