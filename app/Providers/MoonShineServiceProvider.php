@@ -14,6 +14,7 @@ use App\MoonShine\Resources\MoonShineUserRoleResource;
 use App\MoonShine\Resources\DiagramResource;
 use App\MoonShine\Resources\UserResource;
 use App\MoonShine\Resources\TheoryResource;
+use App\MoonShine\Resources\TaskResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 DiagramResource::class,
                 UserResource::class,
                 TheoryResource::class,
+                TaskResource::class,
             ])
             ->pages([
                 ...$config->getPages(),
