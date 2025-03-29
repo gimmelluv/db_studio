@@ -15,6 +15,7 @@ use App\MoonShine\Resources\DiagramResource;
 use App\MoonShine\Resources\UserResource;
 use App\MoonShine\Resources\TheoryResource;
 use App\MoonShine\Resources\TaskResource;
+use App\MoonShine\Resources\TrainingDatabaseResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {

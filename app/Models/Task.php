@@ -8,7 +8,7 @@ class Task extends Model
 {
     protected $fillable = [
         'title', 'description', 'solution', 
-        'check_query', 'difficulty'
+        'check_query', 'er_diagram'
     ];
 
     public function users()

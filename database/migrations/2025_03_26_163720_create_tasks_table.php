@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->text('solution');
             $table->text('check_query');
-            // $table->string('difficulty')->default('beginner');
+            $table->string('er_diagram')->nullable();
             $table->timestamps();
         });
 

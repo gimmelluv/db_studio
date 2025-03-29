@@ -22,7 +22,7 @@ class TrainingController extends Controller
                 'description' => $task->description,
                 'solution' => $task->solution,
                 'check_query' => $task->check_query,
-                'difficulty' => $task->difficulty
+                'er_diagram' => $task->er_diagram
             ];
         });
     

@@ -36,6 +36,7 @@ use App\MoonShine\Resources\UserResource;
 use App\MoonShine\Resources\TheoryResource;
 use MoonShine\Laravel\Layouts\AppLayout;
 use App\MoonShine\Resources\TaskResource;
+use App\MoonShine\Resources\TrainingDatabaseResource;
 
 final class MoonShineLayout extends AppLayout
 {

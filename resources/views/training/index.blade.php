@@ -6,7 +6,8 @@
             @foreach($tasks as $task)
                 <div class="border rounded-lg p-4 hover:bg-gray-50 transition cursor-pointer relative 
                             {{ in_array($task['id'], $completedTasks) ? 'border-green-500 bg-green-50' : '' }}" 
-                     data-task-id="{{ $task['id'] }}">
+                     data-task-id="{{ $task['id'] }}"
+                     data-er-diagram="{{ $task['er_diagram'] ?? '' }}"> <!-- Добавьте этот атрибут -->
                     
                     @if(in_array($task['id'], $completedTasks))
                         <div class="absolute top-2 right-2 bg-green-500 text-white rounded-full p-1">
@@ -18,6 +19,16 @@
                     
                     <h3 class="font-bold text-lg mb-2">{{ $task['title'] }}</h3>
                     <p class="text-gray-600 mb-3">{{ $task['description'] }}</p>
+
+                    @if($task['er_diagram'])
+                        <div class="mb-3">
+                            <h4 class="text-sm font-semibold mb-1">ER-диаграмма:</h4>
+                            <img src="{{ asset('storage/' . $task['er_diagram']) }}" 
+                                alt="ER-диаграмма" 
+                                class="max-w-full h-32 object-contain mx-auto">
+                        </div>
+                    @endif
+
                     <button class="select-task bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded text-sm">
                         Выбрать это задание
                     </button>
@@ -29,6 +40,12 @@
             <h2 id="current-task-title" class="text-xl font-semibold mb-2">Выберите задание</h2>
             <p id="current-task-description" class="text-gray-600 mb-4"></p>
             
+            <!-- Добавьте этот блок для отображения диаграммы -->
+            <div id="current-task-diagram" class="mb-4 hidden">
+                <h3 class="text-lg font-semibold mb-2">ER-диаграмма:</h3>
+                <img id="er-diagram-image" src="" alt="ER-диаграмма задания" class="max-w-full h-auto rounded border">
+            </div>
+
             <form id="query-form">
                 <input type="hidden" id="task-id" name="task_id">
                 @csrf
@@ -63,6 +80,23 @@
                 document.getElementById('task-id').value = taskId;
                 document.getElementById('current-task-title').textContent = taskCard.querySelector('h3').textContent;
                 document.getElementById('current-task-description').textContent = taskCard.querySelector('p').textContent;
+
+                // Добавьте этот код для отображения диаграммы
+                const diagramContainer = document.createElement('div');
+                diagramContainer.className = 'mb-4';
+                
+                if (taskCard.dataset.erDiagram) {
+                    diagramContainer.innerHTML = `
+                        <h3 class="text-lg font-semibold mb-2">ER-диаграмма:</h3>
+                        <img src="/storage/${taskCard.dataset.erDiagram}" 
+                            alt="ER-диаграмма" 
+                            class="max-w-full h-auto rounded border">
+                    `;
+            
+                    // Вставляем перед формой
+                    const form = document.getElementById('query-form');
+                    form.parentNode.insertBefore(diagramContainer, form);
+                }
                 
                 // Сбрасываем предыдущие результаты
                 document.getElementById('result').textContent = '';

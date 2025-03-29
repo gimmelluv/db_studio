@@ -12,6 +12,7 @@ use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Fields\ID;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\UI\ComponentContract;
+use MoonShine\UI\Fields\File;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Textarea;
 
@@ -48,6 +49,11 @@ class TaskResource extends ModelResource
                     ->required(),
                 Textarea::make('Описание', 'description')
                     ->required(),
+                File::make('ER Diagram', 'er_diagram')
+                    ->dir('er-diagrams')
+                    ->allowedExtensions(['jpg', 'png', 'jpeg'])
+                    ->removable()
+                    ->keepOriginalFileName(),
                 Textarea::make('Решение', 'solution')
                     ->required(),
                 Textarea::make('Проверочный запрос', 'check_query')
