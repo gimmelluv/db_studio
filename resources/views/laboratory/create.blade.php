@@ -5,6 +5,9 @@
             <form action="{{ route('laboratory.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 
+                <!-- Скрытое поле для статуса (по умолчанию "draft") -->
+                <input type="hidden" name="status" value="draft">
+
                 <x-forms.input id="type"
                     label="К какому заданию относится диаграмма?" type="select" name="type"
                     :options="['type1' => 'Задание 1', 'type2' => 'Задание 2', 'type3' => 'Задание 3']" required/>
@@ -31,8 +34,17 @@
                 </div>
 
                 <div class="flex justify-between mt-4">
-                    <x-forms.button type="submit">Сохранить в лаборатории</x-forms.button>
-                    <x-forms.button type="button">Отправить на проверку</x-forms.button>
+                    <!-- Кнопка "Сохранить" - остаётся как черновик -->
+                    <x-forms.button type="submit" name="action" value="save">Сохранить в лаборатории</x-forms.button>
+                    
+                    <!-- Кнопка "Отправить на проверку" - меняет статус на "review" -->
+                    <x-forms.button 
+                        type="submit" 
+                        name="action" 
+                        value="submit" 
+                        class="bg-green-500 hover:bg-green-600 text-white">
+                        Отправить на проверку
+                    </x-forms.button>
                 </div>
     
             </form>

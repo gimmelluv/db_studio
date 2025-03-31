@@ -16,6 +16,7 @@ use MoonShine\UI\Fields\File;
 use MoonShine\UI\Fields\Select;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Textarea;
+use MoonShine\Filters\SelectFilter;
 
 /**
  * @extends ModelResource<Diagram>
@@ -41,6 +42,21 @@ class DiagramResource extends ModelResource
                     'type3' => 'Задание 3',
                 ])
                 ->sortable(),
+            Select::make('Статус', 'status')
+                ->options([
+                    Diagram::STATUS_DRAFT => 'Черновик',
+                    Diagram::STATUS_REVIEW => 'На проверке',
+                    Diagram::STATUS_APPROVED => 'Проверено',
+                ])
+                ->badge(function($status) {
+                    return match($status) {
+                        Diagram::STATUS_DRAFT => 'warning',
+                        Diagram::STATUS_REVIEW => 'info',
+                        Diagram::STATUS_APPROVED => 'success',
+                        default => 'default',
+                    };
+                })
+                ->sortable(),
         ];
     }
 
@@ -52,6 +68,14 @@ class DiagramResource extends ModelResource
         return [
             Box::make('Основная информация', [
                 ID::make()->sortable(),
+
+                Select::make('Статус', 'status')
+                    ->options([
+                        Diagram::STATUS_DRAFT => 'Черновик',
+                        Diagram::STATUS_REVIEW => 'На проверке',
+                        Diagram::STATUS_APPROVED => 'Проверено',
+                    ])
+                    ->required(),
 
                 Select::make('Тип', 'type')
                     ->options([
@@ -71,6 +95,8 @@ class DiagramResource extends ModelResource
                     ->dir('diagrams') // Папка для хранения файлов
                     ->allowedExtensions(['xml', 'drawio', 'xslt', 'xbl', 'xsl', 'svg', 'png'])
                     ->removable(),
+
+                Textarea::make('Комментарий администратора', 'admin_comment')
             ])
         ];
     }
@@ -84,6 +110,13 @@ class DiagramResource extends ModelResource
             ID::make(),
             Text::make('Название', 'title'),
             Textarea::make('Описание', 'description'),
+            Textarea::make('Комментарий администратора', 'admin_comment'),
+            Select::make('Статус', 'status')
+                ->options([
+                    Diagram::STATUS_DRAFT => 'Черновик',
+                    Diagram::STATUS_REVIEW => 'На проверке',
+                    Diagram::STATUS_APPROVED => 'Проверено',
+                ]),
             Select::make('Тип', 'type')
                 ->options([
                     'type1' => 'Задание 1',
@@ -106,17 +139,15 @@ class DiagramResource extends ModelResource
             'type' => 'required',
             'title' => 'required',
             'description' => 'required',
+            'status' => 'required',
             'file_path' => 'sometimes|file|mimes:xml,drawio,xslt,xbl,xsl,svg,png',
         ];
     }
 
-    // public function onSave(Model $item): Model      здесь создание диаграммы через админа
+    // public function filters(): array
     // {
-    //     // Автоматически заполняем user_id текущего пользователя
-    //     if (auth('moonshine')->check()) {
-    //         $item->user_id = auth('moonshine')->user()->id;
-    //     }
-
-    //     return $item;
+    //     return [
+    //         TextFilter::make('Статус', 'status')
+    //     ];
     // }
 }

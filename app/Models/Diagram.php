@@ -10,12 +10,18 @@ class Diagram extends Model
 {
     use HasFactory;
 
+    const STATUS_DRAFT = 'draft';
+    const STATUS_REVIEW = 'review';
+    const STATUS_APPROVED = 'approved';
+    
     protected $fillable = [
         'type',
         'title',
         'description',
         'file_path',
         'user_id', 
+        'status',
+        'admin_comment'
     ];
 
     // Связь с пользователем
