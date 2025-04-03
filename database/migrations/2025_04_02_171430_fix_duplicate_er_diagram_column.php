@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tasks', function (Blueprint $table) {
-            //
+            // Удаляем колонку, если она существует
+            if (Schema::hasColumn('tasks', 'er_diagram')) {
+                $table->dropColumn('er_diagram');
+            }
+            
+            // Добавляем колонку правильно
+            $table->string('er_diagram')->nullable();
         });
     }
 
@@ -21,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        //
     }
 };
