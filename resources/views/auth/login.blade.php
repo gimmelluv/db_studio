@@ -8,5 +8,11 @@
         <div class="flex justify-center mt-5">
             <x-forms.button>Войти</x-forms.button>
         </div>
+
+        <div class="mt-4 text-center">
+            <a href="{{ route('password.request') }}" class="text-blue-600 hover:text-blue-800">
+                Забыли пароль?
+            </a>
+        </div>
     </x-forms.form-reg>
 </x-layout>
