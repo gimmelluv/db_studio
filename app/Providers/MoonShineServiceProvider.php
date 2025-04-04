@@ -16,6 +16,8 @@ use App\MoonShine\Resources\UserResource;
 use App\MoonShine\Resources\TheoryResource;
 use App\MoonShine\Resources\TaskResource;
 use App\MoonShine\Resources\TrainingDatabaseResource;
+use App\MoonShine\Resources\TestResource;
+use App\MoonShine\Resources\TestQuestionResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -36,6 +38,8 @@ class MoonShineServiceProvider extends ServiceProvider
                 UserResource::class,
                 TheoryResource::class,
                 TaskResource::class,
+                TestResource::class,
+                TestQuestionResource::class,
             ])
             ->pages([
                 ...$config->getPages(),

@@ -21,4 +21,9 @@ class Theory extends Model
     {
         return $this->belongsToMany(User::class)->withPivot('is_passed');
     }
+
+    public function test()
+    {
+        return $this->hasOne(Test::class); // Или hasMany, если у вас несколько тестов
+    }
 }

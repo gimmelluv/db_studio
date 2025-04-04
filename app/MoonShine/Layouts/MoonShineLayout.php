@@ -37,6 +37,8 @@ use App\MoonShine\Resources\TheoryResource;
 use MoonShine\Laravel\Layouts\AppLayout;
 use App\MoonShine\Resources\TaskResource;
 use App\MoonShine\Resources\TrainingDatabaseResource;
+use App\MoonShine\Resources\TestResource;
+use App\MoonShine\Resources\TestQuestionResource;
 
 final class MoonShineLayout extends AppLayout
 {
@@ -55,6 +57,8 @@ final class MoonShineLayout extends AppLayout
             MenuItem::make('Users', UserResource::class),
             MenuItem::make('Theories', TheoryResource::class),
             MenuItem::make('Tasks', TaskResource::class),
+            MenuItem::make('Tests', TestResource::class),
+            MenuItem::make('TestQuestions', TestQuestionResource::class),
         ];
     }
 

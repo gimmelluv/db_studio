@@ -50,11 +50,24 @@ class User extends Authenticatable
         ];
     }
 
-    public function theories(): BelongsToMany
-    {
-        return $this->belongsToMany(Theory::class)->withPivot('is_passed');
-    }
+    // public function theories(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Theory::class)->withPivot('is_passed');
+    // }
 
+    public function theories()
+    {
+        return $this->belongsToMany(Theory::class)
+            ->withPivot('is_passed')
+            ->withTimestamps();
+    }
+    
+    public function tests()
+    {
+        return $this->belongsToMany(Test::class)
+            ->withPivot('score', 'is_passed')
+            ->withTimestamps();
+    }
     /**
      * Получить диаграммы пользователя.
      *

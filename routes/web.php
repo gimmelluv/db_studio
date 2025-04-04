@@ -8,6 +8,7 @@ use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\TheoryController;
 use App\Http\Controllers\TrainingController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,12 @@ Route::get('/theory', [TheoryController::class, 'index']);
 Route::get('/theory/test', function () {
     return view('theory.test');
 })->name('theory.test');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tests/{test}', [TestController::class, 'show'])->name('tests.show');
+    Route::post('/tests/{test}', [TestController::class, 'store'])->name('tests.store');
+    Route::get('/tests/{test}/results', [TestController::class, 'results'])->name('tests.results');
+});
 
 Route::middleware('auth')->group(function () {
     Route::resource('laboratory', DiagramController::class);

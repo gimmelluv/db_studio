@@ -44,6 +44,32 @@
             @endforeach
         </ul>
 
+        <!-- Тесты -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-lg font-semibold mb-4">Пройденные тесты</h2>
+            <ul class="space-y-3">
+                @foreach ($tests as $test)
+                    <li class="p-3 border rounded-lg {{ $user->tests->contains($test->id) && $user->tests()->where('test_id', $test->id)->first()->pivot->is_passed ? 'border-green-500 bg-green-50' : '' }}">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center mr-3 {{ $user->tests->contains($test->id) && $user->tests()->where('test_id', $test->id)->first()->pivot->is_passed ? 'bg-green-500' : 'bg-gray-300' }}">
+                                @if ($user->tests->contains($test->id) && $user->tests()->where('test_id', $test->id)->first()->pivot->is_passed)
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                @endif
+                            </div>
+                            <div>
+                                <p class="font-medium">{{ $test->title }}</p>
+                                @if ($user->tests->contains($test->id))
+                                    <p class="text-sm text-gray-600">Результат: {{ $user->tests()->where('test_id', $test->id)->first()->pivot->score }} баллов</p>
+                                @endif
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
         <h2 class="text-lg font-semibold mb-4">Выполненные задания:</h2>
             <ul class="space-y-4">
                 @foreach ($tasks as $task)
