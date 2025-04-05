@@ -29,9 +29,9 @@ Route::get('/theory/test', function () {
 })->name('theory.test');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/tests/{test}/results', [TestController::class, 'results'])->name('tests.results');
     Route::get('/tests/{test}', [TestController::class, 'show'])->name('tests.show');
     Route::post('/tests/{test}', [TestController::class, 'store'])->name('tests.store');
-    Route::get('/tests/{test}/results', [TestController::class, 'results'])->name('tests.results');
 });
 
 Route::middleware('auth')->group(function () {

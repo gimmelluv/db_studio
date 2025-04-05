@@ -81,7 +81,7 @@ class TestController extends Controller
         }
 
         return redirect()
-            ->route('tests.results', $test->theory_id)
+            ->route('tests.results', $test->id)
             ->with([
                 'test_result' => [
                     'score' => $score,
