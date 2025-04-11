@@ -28,5 +28,113 @@
             </div>
            </div>
         </section>
+
+        <!-- Новая секция "Преимущества обучения" -->
+        <section class="mt-12">
+            <div class="p-10">
+                <div class="text-2xl font-bold text-center mb-12 mt-4">
+                    <h2>Наши преимущества</h2>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <x-section-3 
+                        title="Практико-ориентированный подход" 
+                        description="Обучение через решение реальных задач и кейсов"
+                        icon="🧠"
+                        color="bg-white-100"/>
+                    <x-section-3 
+                        title="Гибкий график" 
+                        description="Занимайтесь в удобное время в своем темпе"
+                        icon="⏱️"
+                        color="bg-white-100"/>
+                    <x-section-3 
+                        title="Поддержка" 
+                        description="Обратная связь от преподавателей и помощь в сложных моментах"
+                        icon="🤝"
+                        color="bg-white-100"/>
+                    <x-section-3 
+                        title="Сертификат" 
+                        description="Документ об окончании, подтверждающий ваши навыки"
+                        icon="📜"
+                        color="bg-white-100"/>
+                    <x-section-3 
+                        title="Актуальные знания" 
+                        description="Программа регулярно обновляется согласно последним трендам"
+                        icon="🔄"
+                        color="bg-white-100"/>
+                    <x-section-3 
+                        title="Сообщество" 
+                        description="Доступ к закрытому чату с единомышленниками"
+                        icon="💬"
+                        color="bg-white-100"/>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция FAQ -->
+        <section class="mt-12">
+            <div class="p-10">
+                <div class="text-2xl font-bold text-center mb-12 mt-4">
+                    <h2>FAQ</h2>
+                </div>
+                
+                <div class="max-w-4xl mx-auto space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div x-data="{ open: false }" class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button 
+                            @click="open = !open" 
+                            class="w-full px-6 py-4 text-left bg-gray-50 hover:bg-blue-100 transition-colors duration-200 flex justify-between items-center"
+                        >
+                            <span class="font-bold">Нужны ли специальные знания для начала обучения?</span>
+                            <span x-text="open ? '−' : '+'" class="text-xl font-bold"></span>
+                        </button>
+                        <div x-show="open" x-collapse class="px-6 py-4 bg-white">
+                            <p>Курс рассчитан на начинающих, мы начинаем с основ. Главное — желание учиться!</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div x-data="{ open: false }" class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button 
+                            @click="open = !open" 
+                            class="w-full px-6 py-4 text-left bg-gray-50 hover:bg-blue-100 transition-colors duration-200 flex justify-between items-center"
+                        >
+                            <span class="font-bold">Какой срок доступа к курсу?</span>
+                            <span x-text="open ? '−' : '+'" class="text-xl font-bold"></span>
+                        </button>
+                        <div x-show="open" x-collapse class="px-6 py-4 bg-white">
+                            <p>Доступ к курсу предоставляется на 1 год с момента покупки, включая все обновления.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div x-data="{ open: false }" class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button 
+                            @click="open = !open" 
+                            class="w-full px-6 py-4 text-left bg-gray-50 hover:bg-blue-100 transition-colors duration-200 flex justify-between items-center"
+                        >
+                            <span class="font-bold">Есть ли практические задания?</span>
+                            <span x-text="open ? '−' : '+'" class="text-xl font-bold"></span>
+                        </button>
+                        <div x-show="open" x-collapse class="px-6 py-4 bg-white">
+                            <p>Да, курс содержит более 50 практических заданий с автоматической проверкой в нашей лаборатории.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div x-data="{ open: false }" class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button 
+                            @click="open = !open" 
+                            class="w-full px-6 py-4 text-left bg-gray-50 hover:bg-blue-100 transition-colors duration-200 flex justify-between items-center"
+                        >
+                            <span class="font-bold">Можно ли получить сертификат?</span>
+                            <span x-text="open ? '−' : '+'" class="text-xl font-bold"></span>
+                        </button>
+                        <div x-show="open" x-collapse class="px-6 py-4 bg-white">
+                            <p>Да, после успешного завершения курса вы получите именной сертификат в электронном формате.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </x-layout>
