@@ -16,13 +16,13 @@ class DiagramController extends Controller
     public function index()
     {
         /** @var \App\Models\User $user */
-        $user = Auth::user(); // Получаем текущего пользователя
+        $user = Auth::user(); 
 
         $diagrams = $user->diagrams()
             ->when(request('status'), fn($q, $status) => $q->where('status', $status))
             ->orderBy('status')
             ->orderByDesc('updated_at')
-            ->paginate(9); // или simplePaginate()
+            ->paginate(9); 
     
         return view('laboratory.index', compact('diagrams'));
     }
@@ -53,16 +53,14 @@ class DiagramController extends Controller
 
         $filePath = $request->file('file')->store('diagrams', 'public');
     
-        // Определяем статус
         $status = $request->input('action') === 'submit' ? 'review' : 'draft';
 
-        // Создаем диаграмму
         $diagram = Diagram::create([
             'type' => $request->type,
             'title' => $request->title,
             'description' => $request->description,
             'file_path' => $filePath,
-            'user_id' => Auth::id(), // Явно указываем user_id
+            'user_id' => Auth::id(), 
             'status' => $status,
         ]);
 

@@ -12,7 +12,7 @@ class TheoryController extends Controller
     public function index()
     {
         // Извлекаем все записи из таблицы theories
-        $theories = Theory::all();
+        $theories = Theory::orderBy('created_at', 'asc')->get();
 
         // Передаем данные в представление
         return view('theory.index', compact('theories'));

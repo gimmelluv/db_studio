@@ -13,10 +13,6 @@
             @foreach ($theories as $theory)
                 <x-theory-head sectionId="section{{ $theory->id }}" sectionTitle="{{ $theory->title }}"/>
 
-                {{-- @if ($theory->subtitle)
-                    <p class="mt-2">{{ $theory->subtitle }}</p>
-                @endif --}}
-
                 <div class="mt-10 mb-10 whitespace-pre-wrap">{!! $theory->content !!}</div>
 
                 @auth
@@ -26,27 +22,27 @@
                                     Auth::user()->theories->find($theory->id)->pivot->is_passed;
                     @endphp
 
-                    <form id="markAsPassedForm{{ $theory->id }}" action="{{ route('theory.markAsPassed', $theory) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="{{ $isPassed ? 'bg-green-500 hover:bg-green-400' : 'bg-castom_blue/60 hover:bg-castom_blue/50' }} text-white px-4 py-2 rounded-full transition duration-300">
-                            {{ $isPassed ? 'Пройдено' : 'Отметить пройденным' }}
-                        </button>
-                    </form>
+                    <div class="flex space-x-4 mt-4">
+                        <form id="markAsPassedForm{{ $theory->id }}" action="{{ route('theory.markAsPassed', $theory) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="{{ $isPassed ? 'bg-green-500 hover:bg-green-400' : 'bg-blue-500 hover:bg-blue-700' }} text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                                {{ $isPassed ? 'Пройдено' : 'Отметить пройденным' }}
+                            </button>
+                        </form>
+
+                        @if($theory->test)
+                            <a href="{{ route('tests.show', $theory->test) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                                Пройти тест
+                            </a>
+                        @endif
+                    </div>
+                    
                 @else
                     <p class="text-gray-500">Войдите, чтобы отметить материал как пройденный.</p>
                 @endauth
-                <!-- Добавьте дополнительный элемент для отступа -->
+
                 <div class="mt-10"></div> <!-- Это создаст дополнительное пространство -->
             @endforeach
-
-            <!-- После кнопки "Отметить пройденным" -->
-            @if($theory->test)
-                <div class="mt-4">
-                    <a href="{{ route('tests.show', $theory->test) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Пройти тест
-                    </a>
-                </div>
-            @endif
         </div>
     </div>
 

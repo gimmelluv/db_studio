@@ -105,7 +105,7 @@ class TestController extends Controller
                 ->route('theory.index', $test->theory_id)
                 ->with('error', 'Вы еще не проходили этот тест');
         }
-
+        
         return view('tests.results', [
             'test' => $test,
             'result' => $result,

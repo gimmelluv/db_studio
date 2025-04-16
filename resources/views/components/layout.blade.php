@@ -53,7 +53,6 @@
         </main>
     </div>
 
-    <!-- Подвал -->
     <footer class="py-8 mt-16">
         <div class="max-w-6xl mx-auto px-10 text-sm">
             <div class="grid md:grid-cols-5 gap-8">

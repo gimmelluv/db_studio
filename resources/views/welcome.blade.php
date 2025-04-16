@@ -8,18 +8,16 @@
         <section class="pt-1">
             <div class="grid lg:grid-cols-3 gap-8 mt-6">
                 <x-section-1 title="Перейти к изучению теории" description="Прочти теорию перед тем, как перейти в Лабораторию"/>
-                <x-section-1 title="Лаборатория" description="Здесь ты найдешь практические задания"/>
+                <x-section-1 title="Лаборатория" description="Здесь будут храниться твои работы"/>
                 <x-section-1 title="Прогресс" description="Посмотреть свои достижения"/>
             </div>
         </section>
     
-        <!-- Новая секция "Для кого подойдет этот курс" -->
         <section class="mt-12">
            <div class="bg-white rounded-xl shadow-lg p-10">
             <div class="text-2xl font-bold text-left mb-12 mt-4 pl-10">
                 <h2>Для кого подойдет курс</h2>
             </div>
-             <!-- 4 колонки -->
              <div class="grid lg:grid-cols-4 gap-2">
                 <x-section-2 title="Для аналитиков" description="Углубите знания в своей области и получите необходимый навык для продуктивной работы" logo="{{ Vite::asset('resources/images/sec_2(1).svg') }}"/>
                 <x-section-2 title="Для разработчиков" description="Научитесь оптимально работать с реляционными базами данных" logo="{{ Vite::asset('resources/images/sec_2(2).svg') }}"/>
@@ -29,7 +27,6 @@
            </div>
         </section>
 
-        <!-- Новая секция "Преимущества обучения" -->
         <section class="mt-12">
             <div class="p-10">
                 <div class="text-2xl font-bold text-center mb-12 mt-4">
@@ -70,7 +67,6 @@
             </div>
         </section>
 
-        <!-- Секция FAQ -->
         <section class="mt-12">
             <div class="p-10">
                 <div class="text-2xl font-bold text-center mb-12 mt-4">
@@ -78,7 +74,6 @@
                 </div>
                 
                 <div class="max-w-4xl mx-auto space-y-4">
-                    <!-- FAQ Item 1 -->
                     <div x-data="{ open: false }" class="border border-gray-200 rounded-lg overflow-hidden">
                         <button 
                             @click="open = !open" 
@@ -92,7 +87,6 @@
                         </div>
                     </div>
 
-                    <!-- FAQ Item 2 -->
                     <div x-data="{ open: false }" class="border border-gray-200 rounded-lg overflow-hidden">
                         <button 
                             @click="open = !open" 
@@ -106,7 +100,6 @@
                         </div>
                     </div>
 
-                    <!-- FAQ Item 3 -->
                     <div x-data="{ open: false }" class="border border-gray-200 rounded-lg overflow-hidden">
                         <button 
                             @click="open = !open" 
@@ -120,7 +113,6 @@
                         </div>
                     </div>
 
-                    <!-- FAQ Item 4 -->
                     <div x-data="{ open: false }" class="border border-gray-200 rounded-lg overflow-hidden">
                         <button 
                             @click="open = !open" 

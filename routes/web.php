@@ -63,15 +63,6 @@ Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showRese
 Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
     ->name('password.update');
 
-
-// Route::get('/laboratory', [DiagramController::class, 'index'])->name('laboratory.index');
-// Route::get('/laboratory/create', [DiagramController::class, 'create'])->name('laboratory.create');
-// Route::post('/laboratory/store', [DiagramController::class, 'store'])->name('laboratory.store');
-// Route::get('/laboratory/{id}', [DiagramController::class, 'show'])->name('laboratory.show');
-// Route::get('/laboratory/{id}/edit', [DiagramController::class, 'edit'])->name('laboratory.edit');
-// Route::patch('/laboratory/{id}', [DiagramController::class, 'update'])->name('laboratory.update');
-// Route::delete('/laboratory/{id}', [DiagramController::class, 'destroy'])->name('laboratory.destroy');
-
 Route::get('/progress', [ProgressController::class, 'index'])->name('progress');
 
 Route::middleware('auth')->group(function () {
