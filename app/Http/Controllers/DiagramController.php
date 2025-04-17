@@ -53,7 +53,9 @@ class DiagramController extends Controller
 
         $filePath = $request->file('file')->store('diagrams', 'public');
     
-        $status = $request->input('action') === 'submit' ? 'review' : 'draft';
+        // Явная проверка действия
+        $action = $request->input('action');
+        $status = ($action === 'submit') ? 'review' : 'draft';
 
         $diagram = Diagram::create([
             'type' => $request->type,
@@ -64,7 +66,9 @@ class DiagramController extends Controller
             'status' => $status,
         ]);
 
-        $message = $status === 'review' ? 'Диаграмма отправлена на проверку!' : 'Диаграмма сохранена как черновик!';
+        $message = ($status === 'review') 
+            ? 'Диаграмма отправлена на проверку!' 
+            : 'Диаграмма сохранена как черновик!';
 
         return redirect()->route('laboratory.index')->with('success', $message);
     }
@@ -136,9 +140,14 @@ class DiagramController extends Controller
             $data['file_path'] = $request->file('file')->store('diagrams', 'public');
         }
 
-        // Обновление статуса если отправлено на проверку
+        // Всегда обновляем статус при действии "submit"
         if ($request->input('action') === 'submit') {
             $data['status'] = 'review';
+        } elseif ($diagram->status === 'review') {
+            // Если было "на проверке" и нажали "сохранить", оставляем как есть
+            $data['status'] = 'review';
+        } else {
+            $data['status'] = 'draft';
         }
 
         $diagram->update($data);

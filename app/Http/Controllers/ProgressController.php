@@ -16,9 +16,9 @@ class ProgressController extends Controller
         $user = Auth::user();
 
         // Получаем все элементы прогресса
-        $theories = Theory::all();
+        $theories = Theory::orderBy('created_at', 'asc')->get();
         $tasks = Task::all();
-        $tests = Test::all();
+        $tests = Test::orderBy('created_at', 'asc')->get();
 
         // Считаем пройденные элементы
         $passedTheories = $user->theories()->wherePivot('is_passed', true)->count();
