@@ -23,10 +23,16 @@ class TestController extends Controller
         // Проверяем, пройден ли уже тест
         $testResult = $user->tests()->where('test_id', $test->id)->first();
 
+        if ($testResult) {
+            return redirect()
+                ->route('tests.results', $test->id)
+                ->with('info', 'Вы уже проходили этот тест');
+        }
+
         return view('tests.show', [
             // 'theory' => $theory,
             'test' => $test,
-            'testResult' => $testResult,
+            'testResult' => null,
         ]);
     }
 
@@ -38,8 +44,8 @@ class TestController extends Controller
         // Проверяем, не проходил ли пользователь уже этот тест
         if ($user->tests()->where('test_id', $test->id)->exists()) {
             return redirect()
-                ->back()
-                ->with('error', 'Вы уже проходили этот тест');
+                ->route('tests.results', $test->id)
+                ->with('error', 'Тест уже пройден! Повторная отправка невозможна.');
         }
 
         // Валидация ответов
@@ -83,6 +89,9 @@ class TestController extends Controller
         return redirect()
             ->route('tests.results', $test->id)
             ->with([
+                'score' => $score, // Добавляем в корень сессии
+                'is_passed' => $isPassed, // Добавляем в корень сессии
+                'min_score' => $test->min_score,
                 'test_result' => [
                     'score' => $score,
                     'total' => $test->questions->sum('score'),
@@ -108,7 +117,7 @@ class TestController extends Controller
         
         return view('tests.results', [
             'test' => $test,
-            'result' => $result,
+            'result' => $result->pivot, // Явно передаём только pivot-данные
         ]);
     }
 }
