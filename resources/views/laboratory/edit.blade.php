@@ -2,9 +2,9 @@
     <h2 class="text-center">Редактирование</h2>
         <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mt-5">
     
-            <form method="POST" action="/laboratory/{{ $diagram->id }}">
+            <form method="POST" action="{{ route('laboratory.update', $diagram->id) }}" enctype="multipart/form-data">
                 @csrf
-                @method('PATCH')
+                @method('PUT')
                 
                 <!-- Скрытое поле для статуса -->
                 <input type="hidden" name="status" value="{{ $diagram->status }}">
@@ -54,15 +54,6 @@
                         accept=".xml,.drawio,.xslt,.xbl,.xsl,.svg,.png"/>
                     <p class="text-sm text-gray-600 mt-1">
                         Допустимые форматы: XML (*.drawio, *.xml, *.xslt, *.xbl, *.xsl), SVG, PNG
-                    </p>
-                </div>
-
-                <div class="mb-4">
-                    <h4 class="text-sm font-medium text-gray-700">Файл</h4>
-                    <p class="mt-1 text-lg">
-                        <a href="{{ asset('storage/' . $diagram->file_path) }}" download class="text-blue-600 hover:underline">
-                            {{ basename($diagram->file_path) }}
-                        </a>
                     </p>
                 </div>
 
