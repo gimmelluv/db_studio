@@ -6,10 +6,11 @@
         </section>
 
         <section class="pt-1">
-            <div class="grid lg:grid-cols-3 gap-8 mt-6">
-                <x-section-1 title="Перейти к изучению теории" description="Прочти теорию перед тем, как перейти в Лабораторию"/>
-                <x-section-1 title="Лаборатория" description="Здесь будут храниться твои работы"/>
-                <x-section-1 title="Прогресс" description="Посмотреть свои достижения"/>
+            <div class="grid lg:grid-cols-4 gap-8 mt-6">
+                <x-section-1 href="/theory" title="Теория" description="Начни прохождение курса"/>
+                <x-section-1 href="/laboratory" title="Лаборатория" description="Здесь будут храниться твои работы"/>
+                <x-section-1 href="/training" title="Тренажер" description="Стань мастером SQL"/>
+                <x-section-1 href="/progress" title="Прогресс" description="Посмотри свои достижения"/>
             </div>
         </section>
     
